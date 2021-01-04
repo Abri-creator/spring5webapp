@@ -25,21 +25,7 @@ public class BootstrapData implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Author eric = new Author("Eric", "Evans");
-        Book ddd = new Book("Libro 1", "123123");
-        eric.getBooks().add(ddd);
-        ddd.getAuthors().add(eric);
-
-        authorRepository.save(eric);
-        bookRepository.save(ddd);
-
-        Author rod = new Author("Rod", "Johnson");
-        Book ccc = new Book("Libro 2", "456456");
-        rod.getBooks().add(ccc);
-        ccc.getAuthors().add(rod);
-
-        authorRepository.save(rod);
-        bookRepository.save(ccc);
+        System.out.println("Started in the bootstrap");
 
         Publisher newPublisher = new Publisher();
         newPublisher.setName("Publisher 1");
@@ -50,8 +36,33 @@ public class BootstrapData implements CommandLineRunner {
 
         System.out.println("Publisher count: " + publisherRepository.count());
 
-        System.out.println("Started in the bootstrap");
+        Author eric = new Author("Eric", "Evans");
+        Book ddd = new Book("Libro 1", "123123");
+        eric.getBooks().add(ddd);
+        ddd.getAuthors().add(eric);
+
+        ddd.setPublisher(newPublisher);
+        newPublisher.getBooks().add(ddd);
+
+        authorRepository.save(eric);
+        bookRepository.save(ddd);
+        publisherRepository.save(newPublisher);
+
+        Author rod = new Author("Rod", "Johnson");
+        Book ccc = new Book("Libro 2", "456456");
+        rod.getBooks().add(ccc);
+        ccc.getAuthors().add(rod);
+
+        ccc.setPublisher(newPublisher);
+        newPublisher.getBooks().add(ccc);
+
+        authorRepository.save(rod);
+        bookRepository.save(ccc);
+        publisherRepository.save(newPublisher);
+
         System.out.println("numbers of book " + bookRepository.count());
+
+        System.out.println("Publisher Number of Book: " + newPublisher.getBooks().size());
     }
 
 }
